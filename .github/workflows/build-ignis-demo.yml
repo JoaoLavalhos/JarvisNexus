@@ -1,0 +1,31 @@
+name: Build IGNIS README demo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/ignis-demo.b64"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode animated demo
+        shell: bash
+        run: |
+          base64 -d .github/ignis-demo.b64 > assets/ignis-core-demo.gif
+          test -s assets/ignis-core-demo.gif
+          file assets/ignis-core-demo.gif
+      - name: Commit generated asset
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/ignis-core-demo.gif
+          git diff --cached --quiet && exit 0
+          git commit -m "Adicionar demonstração animada do IGNIS"
+          git push
