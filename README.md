@@ -173,9 +173,11 @@ A integração prevista liga ao IGNIS os estados reais de **repouso, escuta, pro
 
 A demonstração abaixo mostra a implementação visual atual funcionando em tempo real: o **núcleo animado**, o **painel lateral**, os **ajustes do Studio** e o **modo compacto**. O próximo passo é conectar essa interface ao runtime do JarvisNexus para que voz, agente, estados e telemetria reais passem a controlar o IGNIS.
 
-<p align="center">
-  <img src="assets/ignis-core-demo.gif" alt="Demonstração do IGNIS Core em execução" width="85%" />
-</p>
+
+
+https://github.com/user-attachments/assets/59369b11-952d-4b49-9387-5e8368bed800
+
+
 
 <p align="center"><sub>Demonstração curta extraída da implementação atual do IGNIS. O vídeo original foi gravado a 60 FPS; esta versão foi otimizada para carregamento no README.</sub></p>
 
