@@ -2,11 +2,6 @@
 
 > **Alpha / Active Development** — assistente pessoal experimental para Windows com voz, agentes de IA, execução de tarefas e uma arquitetura em evolução para memória persistente e múltiplos núcleos visuais.
 
-<p align="center">
-  <img src="assets/ignis-core-preview.jpg" alt="Prévia do IGNIS Core" width="100%" />
-</p>
-
-<p align="center"><sub><b>IGNIS Core</b> — núcleo visual já implementado separadamente e atualmente em integração com o runtime do JarvisNexus. A telemetria exibida nesta captura é ilustrativa.</sub></p>
 
 ## Visão geral
 
@@ -14,21 +9,112 @@ O **JarvisNexus** é um projeto de assistente pessoal com IA focado em interaç�
 
 A versão atual combina diferentes componentes para separar **escuta**, **conversa**, **execução profunda**, **voz**, **permissões** e **observabilidade**. O objetivo de longo prazo é transformar essa estrutura em um núcleo de agente próprio, modular e independente de um único framework ou provedor de IA.
 
-O projeto começou a partir da exploração de uma base open source publicada no GitHub e, desde as primeiras versões, recebeu melhorias em diversos pontos da experiência e da arquitetura. O desenvolvimento vem sendo progressivamente reorganizado em torno de uma camada própria chamada `nexus/`, responsável por ampliar o fluxo de voz, agente, permissões, execução, diagnóstico e observabilidade.
+O projeto começou a partir da exploração de uma base open source publicada no GitHub e, desde as primeiras versões, foi sendo ampliado em vários pontos da experiência e da arquitetura. A evolução atual está concentrada em uma camada própria chamada `nexus/`, que separa voz, agente, permissões, execução, diagnóstico, observabilidade e preferências do restante do sistema.
 
-## O que já existe
+## Principais evoluções já implementadas
 
-- **Groq Whisper Large V3** para reconhecimento de fala no fluxo Nexus;
-- **Gemini Live** para interação/voz em fluxos compatíveis;
-- **OpenCode + OpenAI** como backend de agente para tarefas mais profundas;
-- camada própria `nexus/` para execução, estado de tarefas, preferências e integração do agente;
-- monitoramento de execução com etapas, atividade e progresso;
-- sistema de permissões para operações do agente;
-- captura de tela aprovada pelo usuário para contexto visual do agente;
-- logs locais de atividade e conversa para diagnóstico;
-- configuração de modelo, modo e workspace;
-- scripts de instalação, inicialização, diagnóstico e verificação no Windows;
-- testes de regressão das versões do agente.
+### Reconhecimento de voz com Groq
+
+O JarvisNexus adiciona um fluxo próprio de STT utilizando **Groq + Whisper Large V3**. Nos testes práticos realizados durante o desenvolvimento, esse fluxo apresentou reconhecimento de fala mais preciso e confiável para o uso pretendido no Nexus do que o caminho de escuta utilizado anteriormente.
+
+A implementação inclui:
+
+- captura manual de áudio PCM16;
+- envio para `whisper-large-v3` ou `whisper-large-v3-turbo`;
+- credencial armazenada fora do código;
+- reutilização de conexão HTTP;
+- limite explícito de gravação;
+- preservação da última captura WAV local para diagnóstico de cortes, sem incluir credenciais.
+
+### Agente profundo com OpenCode + OpenAI
+
+Foi adicionada uma camada própria para execução agente através do **OpenCode**, utilizada separadamente do fluxo de conversa rápida.
+
+Entre as funções implementadas estão:
+
+- inicialização de um servidor OpenCode local isolado para o Nexus;
+- suporte às APIs v1 e v2 do OpenCode;
+- seleção de modelos e variantes de raciocínio;
+- uso de workspace definido pelo usuário;
+- sessões próprias do agente;
+- envio de texto e imagens ao modelo;
+- monitoramento de status e recuperação de falhas.
+
+### Permissões e segurança do agente
+
+O Nexus adiciona regras próprias para controlar o que o agente pode fazer:
+
+- leitura e edição dentro do workspace autorizado;
+- solicitação de confirmação para arquivos sensíveis;
+- confirmação para acesso fora do workspace;
+- confirmação para comandos de shell não previamente seguros;
+- comandos de inspeção como `git status`, `git diff` e `git log` podem ser liberados sem interromper o fluxo;
+- validação das regras antes de aplicá-las ao agente.
+
+### Visão de tela com consentimento
+
+O agente pode receber uma captura da tela quando o usuário pede explicitamente para analisar o monitor.
+
+O fluxo inclui:
+
+- detecção de pedidos explícitos para visualizar a tela;
+- seleção de monitor;
+- prévia local antes do envio;
+- confirmação manual da imagem;
+- compressão e limite de tamanho;
+- verificação do anexo recebido pelo agente através do conteúdo exato da captura.
+
+### Painel de execução do agente
+
+O JarvisNexus ganhou um painel separado para acompanhar tarefas profundas, com:
+
+- etapas e ferramentas executadas;
+- comandos, resultados e duração;
+- mensagens públicas do agente;
+- diffs e verificações de arquivos;
+- cancelamento da tarefa;
+- acompanhamento de progresso sem obrigar a interface a abrir o painel automaticamente.
+
+### Logs, diagnóstico e verificações
+
+A camada Nexus adiciona mecanismos próprios para acompanhar o que realmente aconteceu:
+
+- registro efêmero das ações executadas na sessão;
+- distinção entre ação confirmada, falha, aguardando confirmação e resultado não verificado;
+- `Activity.log` opcional para conversas completas;
+- deduplicação de mensagens;
+- sanitização de informações sensíveis;
+- diagnósticos específicos do agente e do STT;
+- verificações locais de arquivos antes de afirmar que uma tarefa foi concluída.
+
+### Voz do agente
+
+As respostas textuais do agente podem ser encaminhadas para **Gemini Live** como camada independente de voz, sem dar à sessão de voz acesso às ferramentas do agente.
+
+Esse fluxo inclui reprodução PCM, controle de buffer, cancelamento, verificação por transcrição e tratamento de limites da API.
+
+### Sistema visual modular
+
+Antes mesmo da integração completa do IGNIS, o Nexus já adicionou um sistema de núcleos renderizados em tempo real com diferentes estilos, incluindo:
+
+- Reactor;
+- Plasma;
+- Orbit;
+- Radar;
+- Neural;
+- Avatar.
+
+Também existem preferências próprias de intensidade, partículas, grid, movimento reduzido e modo de desempenho.
+
+### Infraestrutura de desenvolvimento
+
+O projeto inclui ainda:
+
+- scripts próprios de instalação, inicialização e diagnóstico no Windows;
+- configuração dedicada do Groq;
+- preferências próprias para agente e visual;
+- testes de regressão das versões V14 a V19;
+- validações específicas para permissões, histórico, edição de arquivos e comportamento da interface.
 
 ## Em desenvolvimento
 
@@ -71,11 +157,17 @@ Próxima camada:
 Obsidian / memória persistente + Skills / MCP + IGNIS Core
 ```
 
-## IGNIS Core
+## Novo visual — IGNIS Core
 
-**IGNIS** é o primeiro núcleo visual desenvolvido para a nova identidade do JarvisNexus. Ele já possui uma implementação visual própria e foi projetado para representar de forma reativa os estados do assistente — repouso, escuta, processamento, execução e fala.
+**IGNIS** é o primeiro núcleo visual desenvolvido como nova identidade do JarvisNexus. Diferente de um mockup estático, ele **já possui implementação visual própria**; a etapa atual é conectar o runtime real do JarvisNexus a essa interface.
 
-A etapa atual é integrar o sistema do JarvisNexus ao IGNIS, conectando voz, agente, estados e telemetria reais à interface. A captura acima mostra a implementação visual atual; os dados de telemetria exibidos nela ainda são simulados enquanto essa integração é concluída.
+A integração prevista liga ao IGNIS os estados reais de **repouso, escuta, processamento, execução e fala**, além de voz, agente e telemetria. Na captura abaixo, o visual já existe em código, enquanto os valores de telemetria ainda são ilustrativos até a conexão completa com o backend.
+
+<p align="center">
+  <img src="assets/ignis-core-preview.jpg" alt="IGNIS Core — novo visual do JarvisNexus" width="100%" />
+</p>
+
+<p align="center"><sub><b>IGNIS Core</b> — implementação visual atual que está sendo integrada ao sistema do JarvisNexus.</sub></p>
 
 ## Estrutura do projeto
 
