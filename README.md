@@ -14,7 +14,7 @@ O **JarvisNexus** é um projeto de assistente pessoal com IA focado em interaç�
 
 A versão atual combina diferentes componentes para separar **escuta**, **conversa**, **execução profunda**, **voz**, **permissões** e **observabilidade**. O objetivo de longo prazo é transformar essa estrutura em um núcleo de agente próprio, modular e independente de um único framework ou provedor de IA.
 
-O projeto começou como uma evolução experimental do **Mark-LVI** e está sendo progressivamente reestruturado com uma camada própria chamada `nexus/`. A atribuição e a licença do projeto-base são preservadas enquanto houver componentes derivados. Veja [`NOTICE.md`](NOTICE.md).
+O projeto começou a partir da exploração de um **projeto open source publicado no GitHub** e vem sendo progressivamente reestruturado em torno de uma arquitetura própria, com uma camada dedicada chamada `nexus/`.
 
 ## O que já existe
 
@@ -148,11 +148,9 @@ O JarvisNexus está em **desenvolvimento ativo**. Algumas partes da V19 já func
 
 A intenção deste repositório é também registrar essa evolução técnica, em vez de apresentar o projeto como finalizado.
 
-## Origem e licença
+## Origem
 
-O desenvolvimento atual é de **João Lavalhos**. O projeto teve como base inicial o [Mark-LVI](https://github.com/FatihMakes/Mark-LVI), de FatihMakes.
-
-Enquanto o repositório contiver código derivado dessa base, ele permanece sujeito às condições aplicáveis da licença **Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)** incluída em [`LICENSE`](LICENSE), além da atribuição descrita em [`NOTICE.md`](NOTICE.md).
+O desenvolvimento atual do **JarvisNexus** é de **João Lavalhos**. O projeto nasceu a partir da análise e experimentação com uma base open source disponível no GitHub e vem sendo progressivamente transformado em uma arquitetura própria.
 
 ---
 
