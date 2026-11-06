@@ -6,7 +6,7 @@
   <img src="assets/ignis-core-preview.jpg" alt="Prévia do IGNIS Core" width="100%" />
 </p>
 
-<p align="center"><sub><b>IGNIS Core</b> — nova interface do JarvisNexus em integração. A telemetria exibida nesta prévia é ilustrativa.</sub></p>
+<p align="center"><sub><b>IGNIS Core</b> — núcleo visual já implementado separadamente e atualmente em integração com o runtime do JarvisNexus. A telemetria exibida nesta captura é ilustrativa.</sub></p>
 
 ## Visão geral
 
@@ -14,7 +14,7 @@ O **JarvisNexus** é um projeto de assistente pessoal com IA focado em interaç�
 
 A versão atual combina diferentes componentes para separar **escuta**, **conversa**, **execução profunda**, **voz**, **permissões** e **observabilidade**. O objetivo de longo prazo é transformar essa estrutura em um núcleo de agente próprio, modular e independente de um único framework ou provedor de IA.
 
-O projeto começou a partir da exploração de um **projeto open source publicado no GitHub** e vem sendo progressivamente reestruturado em torno de uma arquitetura própria, com uma camada dedicada chamada `nexus/`.
+O projeto começou a partir da exploração de uma base open source publicada no GitHub e, desde as primeiras versões, recebeu melhorias em diversos pontos da experiência e da arquitetura. O desenvolvimento vem sendo progressivamente reorganizado em torno de uma camada própria chamada `nexus/`, responsável por ampliar o fluxo de voz, agente, permissões, execução, diagnóstico e observabilidade.
 
 ## O que já existe
 
@@ -73,9 +73,9 @@ Obsidian / memória persistente + Skills / MCP + IGNIS Core
 
 ## IGNIS Core
 
-**IGNIS** é o primeiro núcleo visual desenvolvido para a nova identidade do JarvisNexus. A proposta é substituir uma interface estática por núcleos reativos que representem os estados do assistente — repouso, escuta, processamento, execução e fala.
+**IGNIS** é o primeiro núcleo visual desenvolvido para a nova identidade do JarvisNexus. Ele já possui uma implementação visual própria e foi projetado para representar de forma reativa os estados do assistente — repouso, escuta, processamento, execução e fala.
 
-A imagem acima mostra a direção visual em desenvolvimento. O sistema exibido na prévia ainda está sendo conectado ao backend real do JarvisNexus, por isso os dados de telemetria mostrados nela são simulados.
+A etapa atual é integrar o sistema do JarvisNexus ao IGNIS, conectando voz, agente, estados e telemetria reais à interface. A captura acima mostra a implementação visual atual; os dados de telemetria exibidos nela ainda são simulados enquanto essa integração é concluída.
 
 ## Estrutura do projeto
 
