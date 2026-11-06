@@ -1,0 +1,11 @@
+{
+  "style": "face",
+  "accent": "#00d5ff",
+  "intensity": 80,
+  "particles": true,
+  "grid": true,
+  "reduced_motion": false,
+  "performance_mode": true,
+  "remote_enabled": false,
+  "weather_city": ""
+}

@@ -1,0 +1,6 @@
+$ErrorActionPreference = 'Stop'
+Set-Location -LiteralPath $PSScriptRoot
+$python = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'
+if (!(Test-Path -LiteralPath $python)) { throw 'Execute INSTALAR.ps1 primeiro.' }
+& $python -m nexus.setup_groq
+if ($LASTEXITCODE -ne 0) { throw 'Nao foi possivel salvar a chave.' }

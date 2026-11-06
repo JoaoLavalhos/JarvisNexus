@@ -1,0 +1,30 @@
+{
+  "workspace": null,
+  "mode": "build",
+  "model": {
+    "capabilities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ],
+      "temperature": false,
+      "tools": true
+    },
+    "id": "gpt-6.1-sol",
+    "name": "GPT-6.1 Sol",
+    "providerID": "openai",
+    "variants": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+    ]
+  },
+  "variant": "high",
+  "quick_chat": true
+}
